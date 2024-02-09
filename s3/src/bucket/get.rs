@@ -194,6 +194,9 @@ impl Bucket {
     /// use anyhow::Result;
     /// use tokio_stream::StreamExt;
     /// use tokio::io::AsyncWriteExt;
+    /// use tokio::io;
+    /// use bytes::Bytes;
+    /// use futures::TryStreamExt;
     ///
     /// # #[tokio::main]
     /// # async fn main() -> Result<()> {
@@ -208,9 +211,20 @@ impl Bucket {
     ///
     /// let mut async_output_file = tokio::fs::File::create("async_output_file").await.expect("Unable to create file");
     ///
-    /// while let Some(chunk) = response_data_stream.bytes().next().await {
-    ///     async_output_file.write_all(&chunk.unwrap()).await?;
-    /// }
+    /// let stream_of_bytes = response_data_stream
+    ///     .body_stream
+    ///     .try_filter_map(
+    ///         |frame: hyper::body::Frame<Bytes>| async move { Ok(frame.into_data().ok()) },
+    ///     )
+    ///     .map_err(|err| io::Error::new(io::ErrorKind::Other, err));
+    ///
+    /// let async_read = tokio_util::io::StreamReader::new(stream_of_bytes);
+    /// let buffer_size = 512 * 1024; //512 KiB
+    /// let async_read = tokio::io::BufReader::with_capacity(buffer_size, async_read);
+    ///
+    /// let mut async_read = std::pin::pin!(async_read);
+    ///
+    /// io::copy(&mut async_read, &mut async_output_file).await?;
     ///
     /// #
     /// # Ok(())

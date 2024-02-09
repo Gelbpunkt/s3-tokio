@@ -2,7 +2,7 @@ extern crate base64;
 extern crate md5;
 
 use bytes::Bytes;
-use futures::stream;
+use futures::TryStreamExt;
 use http_body_util::BodyExt;
 use http_body_util::BodyStream;
 use http_body_util::Full;
@@ -12,7 +12,7 @@ use hyper_util::client::legacy::Client;
 use hyper_util::rt::TokioExecutor;
 use std::collections::HashMap;
 use time::OffsetDateTime;
-use tokio_stream::StreamExt;
+use tokio::io;
 
 use super::request_trait::{Request, ResponseData};
 use crate::bucket::Bucket;
@@ -48,9 +48,8 @@ impl<'a> Request for HyperRequest<'a> {
         };
         let https_connector = HttpsConnectorBuilder::new()
             .with_webpki_roots()
-            .https_only()
-            .enable_http1()
-            .enable_http2()
+            .https_or_http()
+            .enable_all_versions()
             .build();
         let client = Client::builder(TokioExecutor::new()).build::<_, Full<Bytes>>(https_connector);
 
@@ -135,15 +134,22 @@ impl<'a> Request for HyperRequest<'a> {
         let response = self.response().await?;
         let status_code = response.status();
 
-        let body = response.into_body();
-        let mut stream = BodyStream::new(body);
+        let body: Incoming = response.into_body();
+        let stream: BodyStream<Incoming> = BodyStream::new(body);
 
-        while let Some(item) = stream.next().await {
-            let data = item?;
-            if let Some(data) = data.data_ref() {
-                writer.write_all(&data).await?;
-            }
-        }
+        let stream_of_bytes = stream
+            .try_filter_map(
+                |frame: hyper::body::Frame<Bytes>| async move { Ok(frame.into_data().ok()) },
+            )
+            .map_err(|err| io::Error::new(io::ErrorKind::Other, err));
+
+        let async_read = tokio_util::io::StreamReader::new(stream_of_bytes);
+        let buffer_size = 512 * 1024; //512 KiB
+        let async_read = tokio::io::BufReader::with_capacity(buffer_size, async_read);
+
+        let mut async_read = std::pin::pin!(async_read);
+
+        io::copy(&mut async_read, writer).await?;
 
         Ok(status_code.as_u16())
     }
@@ -152,11 +158,10 @@ impl<'a> Request for HyperRequest<'a> {
         let response = self.response().await?;
         let status_code = response.status();
 
-        let data = response.collect().await?;
-        let stream = stream::once(async move { Ok(data.to_bytes()) });
+        let body_stream = BodyStream::new(response.into_body());
 
         Ok(ResponseDataStream {
-            bytes: Box::pin(stream),
+            body_stream,
             status_code: status_code.as_u16(),
         })
     }

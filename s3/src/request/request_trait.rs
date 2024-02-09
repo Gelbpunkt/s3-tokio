@@ -1,6 +1,8 @@
 use base64::engine::general_purpose;
 use base64::Engine;
 use hmac::Mac;
+use http_body_util::BodyStream;
+use hyper::body::Incoming;
 use std::collections::HashMap;
 use time::format_description::well_known::Rfc2822;
 use time::OffsetDateTime;
@@ -84,19 +86,16 @@ impl fmt::Display for ResponseData {
     }
 }
 
-use std::pin::Pin;
-
-pub type DataStream = Pin<Box<dyn futures::Stream<Item = StreamItem> + Send>>;
-pub type StreamItem = Result<bytes::Bytes, crate::error::S3Error>;
+pub type DataStream = BodyStream<Incoming>;
 
 pub struct ResponseDataStream {
-    pub bytes: DataStream,
+    pub body_stream: DataStream,
     pub status_code: u16,
 }
 
 impl ResponseDataStream {
-    pub fn bytes(&mut self) -> &mut DataStream {
-        &mut self.bytes
+    pub fn body_stream(&mut self) -> &mut DataStream {
+        &mut self.body_stream
     }
 }
 

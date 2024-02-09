@@ -308,7 +308,7 @@ mod test {
 
             let mut bytes = vec![];
 
-            while let Some(chunk) = response_data_stream.bytes().next().await {
+            while let Some(chunk) = response_data_stream.body_stream().next().await {
                 bytes.push(chunk)
             }
             assert_ne!(bytes.len(), 0);
