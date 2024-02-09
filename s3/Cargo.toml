@@ -32,14 +32,14 @@ path = "../examples/gcs-tokio.rs"
 
 
 [dependencies]
-aws-creds = { version = "0.36.0", default-features = false }
+aws-creds = { version = "0.36", default-features = false, features = ["rustls-tls"]}
 # aws-creds = { path = "../aws-creds", default-features = false }
-aws-region = "0.25.3"
+aws-region = "0.25"
 # aws-region = {path = "../aws-region"}
 base64 = "0.21"
 cfg-if = "1"
-time = { version = "^0.3.6", features = ["formatting", "macros"] }
-futures = "^0.3"
+time = { version = "0.3", features = ["formatting", "macros"] }
+futures = "0.3"
 hex = "0.4"
 hmac = "0.12"
 http = "1.0"
@@ -54,11 +54,15 @@ hyper-util = { version = "0.1", default-features = false, features = [
     "client",
     "http1",
     "http2",
+    "client-legacy",
+    "tokio",
     #"stream",
 ] }
-hyper-tls = { version = "0.6.0", default-features = false }
-hyper-native-tls = { version = "0.3.0", default-features = false }
-tracing = { version="0.1.35" }
+hyper-rustls = { version = "0.26", default-features = false, features = ["ring", "webpki-roots", "http1", "http2"] }
+# hyper-tls = { version = "0.6", default-features = false }
+rustls = "0.22"
+# hyper-native-tls = { version = "0.3", default-features = false }
+tracing = { version="0.1" }
 md5 = "0.7"
 percent-encoding = "2"
 serde = { version = "1", features = ["derive"]}
@@ -69,15 +73,15 @@ tokio = { version = "1", features = [
     "io-util",
     "fs"
 ], default-features = false }
-tokio-native-tls = { version = "0.3" }
+# tokio-native-tls = { version = "0.3" }
 tokio-stream = { version = "0.1" }
 url = "2"
 minidom = { version = "0.15" }
 bytes = { version = "1" }
-strum_macros = "0.26.1"
+strum_macros = "0.26"
 
 [features]
-default = ["fail-on-err", "aws-creds/native-tls"]
+default = ["fail-on-err"]
 no-verify-ssl = []
 fail-on-err = []
 

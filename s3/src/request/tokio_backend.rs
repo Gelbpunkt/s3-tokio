@@ -11,7 +11,7 @@ use http_body_util::StreamBody;
 use hyper::body::Body;
 use hyper::body::Frame;
 use hyper::body::Incoming;
-use hyper_tls::HttpsConnector;
+use hyper_rustls::HttpsConnectorBuilder;
 use hyper_util::client::legacy::Client;
 use hyper_util::rt::TokioExecutor;
 use std::collections::HashMap;
@@ -51,7 +51,12 @@ impl<'a> Request for HyperRequest<'a> {
             Ok(headers) => headers,
             Err(e) => return Err(e),
         };
-        let https_connector = HttpsConnector::new();
+        let https_connector = HttpsConnectorBuilder::new()
+            .with_webpki_roots()
+            .https_only()
+            .enable_http1()
+            .enable_http2()
+            .build();
         let client = Client::builder(TokioExecutor::new()).build::<_, Full<Bytes>>(https_connector);
 
         let method = match self.command.http_verb() {
