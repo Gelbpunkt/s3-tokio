@@ -8,7 +8,7 @@ readme = "README.md"
 keywords = ["S3", "Wasabi", "Minio", "GCP", "R2"]
 license = "MIT"
 documentation = "https://docs.rs/aws-creds/latest/awscreds/"
-edition = "2018"
+edition = "2021"
 
 [lib]
 name = "s3"
@@ -33,7 +33,7 @@ path = "../examples/gcs-tokio.rs"
 
 [dependencies]
 async-trait = "0.1"
-aws-creds = { version = "0.35.0", default-features = false }
+aws-creds = { version = "0.36.0", default-features = false }
 # aws-creds = { path = "../aws-creds", default-features = false }
 aws-region = "0.25.3"
 # aws-region = {path = "../aws-region"}
@@ -43,20 +43,27 @@ time = { version = "^0.3.6", features = ["formatting", "macros"] }
 futures = "^0.3"
 hex = "0.4"
 hmac = "0.12"
-http = "0.2"
-hyper = { version = "^0.14", default-features = false, features = [
+http = "1.0"
+http-body-util = "0.1"
+hyper = { version = "1.1", default-features = false, features = [
     "client",
     "http1",
     "http2",
-    "stream",
+    #"stream",
 ] }
-hyper-tls = { version = "0.5.0", default-features = false }
+hyper-util = { version = "0.1", default-features = false, features = [
+    "client",
+    "http1",
+    "http2",
+    #"stream",
+] }
+hyper-tls = { version = "0.6.0", default-features = false }
 hyper-native-tls = { version = "0.3.0", default-features = false }
 tracing = { version="0.1.35" }
 md5 = "0.7"
 percent-encoding = "2"
 serde = { version = "1", features = ["derive"]}
-quick-xml = { version = "0.28", features = ["serialize"] }
+quick-xml = { version = "0.31", features = ["serialize"] }
 sha2 = "0.10"
 thiserror = "1"
 tokio = { version = "1", features = [
@@ -68,7 +75,7 @@ tokio-stream = { version = "0.1" }
 url = "2"
 minidom = { version = "0.15" }
 bytes = { version = "1" }
-strum_macros = "0.24.3"
+strum_macros = "0.26.1"
 
 [features]
 default = ["fail-on-err", "aws-creds/native-tls"]
@@ -79,5 +86,5 @@ fail-on-err = []
 tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros", "fs"] }
 async-std = { version = "1", features = ["attributes"] }
 uuid = { version = "1", features = ["v4"] }
-env_logger = "0.10"
+env_logger = "0.11"
 anyhow = "1"
