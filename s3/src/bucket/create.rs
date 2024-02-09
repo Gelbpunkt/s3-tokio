@@ -7,10 +7,8 @@ use crate::BucketConfiguration;
 use awscreds::Credentials;
 use awsregion::Region;
 use http::HeaderMap;
-use std::{
-    collections::HashMap,
-    sync::{Arc, RwLock},
-};
+use std::{collections::HashMap, sync::Arc};
+use tokio::sync::RwLock;
 
 use super::DEFAULT_REQUEST_TIMEOUT;
 

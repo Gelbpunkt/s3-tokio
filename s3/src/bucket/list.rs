@@ -65,11 +65,7 @@ impl Bucket {
     /// # }
     /// ```
     pub async fn exists(&self) -> Result<bool, S3Error> {
-        let credentials = self
-            .credentials
-            .read()
-            .expect("Read lock to be acquired on Credentials")
-            .clone();
+        let credentials = self.credentials.read().await.clone();
 
         let response = Self::list_buckets(self.region.clone(), credentials).await?;
 

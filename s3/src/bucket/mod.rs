@@ -4,8 +4,9 @@ use awscreds::Credentials;
 use awsregion::Region;
 use http::HeaderMap;
 use std::collections::HashMap;
-use std::sync::{Arc, RwLock};
+use std::sync::Arc;
 use std::time::Duration;
+use tokio::sync::RwLock;
 
 pub use std::io::Read;
 
