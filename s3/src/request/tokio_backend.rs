@@ -3,13 +3,9 @@ extern crate md5;
 
 use bytes::Bytes;
 use futures::stream;
-use futures::TryStreamExt;
 use http_body_util::BodyExt;
 use http_body_util::BodyStream;
 use http_body_util::Full;
-use http_body_util::StreamBody;
-use hyper::body::Body;
-use hyper::body::Frame;
 use hyper::body::Incoming;
 use hyper_rustls::HttpsConnectorBuilder;
 use hyper_util::client::legacy::Client;
@@ -25,8 +21,7 @@ use crate::command::HttpMethod;
 use crate::error::S3Error;
 
 pub use crate::request::tokio_backend::HyperRequest as RequestImpl;
-pub use tokio::io::AsyncRead;
-pub use tokio::io::{AsyncWrite, AsyncWriteExt};
+pub use tokio::io::AsyncWriteExt;
 pub use tokio_stream::Stream;
 
 use tracing::{event, span, Level};

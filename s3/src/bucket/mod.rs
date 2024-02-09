@@ -9,10 +9,7 @@ use std::time::Duration;
 
 pub use std::io::Read;
 
-pub use presign::*;
-
 mod credentials;
-pub use credentials::*;
 
 mod tag;
 pub use tag::*;
@@ -24,22 +21,16 @@ mod list;
 pub use list::*;
 
 mod delete;
-pub use delete::*;
 
 mod copy;
-pub use copy::*;
 
 mod get;
-pub use get::*;
 
 mod put;
-pub use put::*;
 
 mod head;
-pub use head::*;
 
 mod utils;
-pub use utils::*;
 
 pub type Query = HashMap<String, String>;
 

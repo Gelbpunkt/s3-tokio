@@ -339,6 +339,12 @@ mod test {
 
     #[ignore]
     #[tokio::test]
+    async fn streaming_digital_ocean_put_head_get_delete_object() {
+        streaming_test_put_get_delete_small_object(test_digital_ocean_bucket()).await;
+    }
+
+    #[ignore]
+    #[tokio::test]
     async fn streaming_minio_put_head_get_delete_object() {
         streaming_test_put_get_delete_small_object(test_minio_bucket()).await;
     }
@@ -408,6 +414,12 @@ mod test {
     #[tokio::test]
     async fn r2_test_put_head_get_delete_object() {
         put_head_get_delete_object(test_r2_bucket(), false).await;
+    }
+
+    #[ignore]
+    #[tokio::test]
+    async fn digital_ocean_test_put_head_get_delete_object() {
+        put_head_get_delete_object(test_digital_ocean_bucket(), false).await;
     }
 
     #[test]
