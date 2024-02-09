@@ -49,7 +49,7 @@ impl<'a> Request for HyperRequest<'a> {
         let https_connector = HttpsConnectorBuilder::new()
             .with_webpki_roots()
             .https_or_http()
-            .enable_all_versions()
+            .enable_http1()
             .build();
         let client = Client::builder(TokioExecutor::new()).build::<_, Full<Bytes>>(https_connector);
 
