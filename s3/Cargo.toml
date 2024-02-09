@@ -32,7 +32,6 @@ path = "../examples/gcs-tokio.rs"
 
 
 [dependencies]
-async-trait = "0.1"
 aws-creds = { version = "0.36.0", default-features = false }
 # aws-creds = { path = "../aws-creds", default-features = false }
 aws-region = "0.25.3"

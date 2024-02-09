@@ -100,19 +100,26 @@ impl ResponseDataStream {
     }
 }
 
-#[async_trait::async_trait]
-pub trait Request {
+pub trait Request: Send + Sync {
     type Response;
     type HeaderMap;
 
-    async fn response(&self) -> Result<Self::Response, S3Error>;
-    async fn response_data(&self, etag: bool) -> Result<ResponseData, S3Error>;
-    async fn response_data_to_writer<T: tokio::io::AsyncWrite + Send + Unpin>(
+    fn response(&self)
+        -> impl std::future::Future<Output = Result<Self::Response, S3Error>> + Send;
+    fn response_data(
+        &self,
+        etag: bool,
+    ) -> impl std::future::Future<Output = Result<ResponseData, S3Error>> + Send;
+    fn response_data_to_writer<T: tokio::io::AsyncWrite + Send + Unpin>(
         &self,
         writer: &mut T,
-    ) -> Result<u16, S3Error>;
-    async fn response_data_to_stream(&self) -> Result<ResponseDataStream, S3Error>;
-    async fn response_header(&self) -> Result<(Self::HeaderMap, u16), S3Error>;
+    ) -> impl std::future::Future<Output = Result<u16, S3Error>> + Send;
+    fn response_data_to_stream(
+        &self,
+    ) -> impl std::future::Future<Output = Result<ResponseDataStream, S3Error>> + Send;
+    fn response_header(
+        &self,
+    ) -> impl std::future::Future<Output = Result<(Self::HeaderMap, u16), S3Error>> + Send;
     fn datetime(&self) -> OffsetDateTime;
     fn bucket(&self) -> Bucket;
     fn command(&self) -> Command;

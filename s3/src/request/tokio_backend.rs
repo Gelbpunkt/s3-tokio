@@ -41,7 +41,6 @@ pub struct HyperRequest<'a> {
     pub datetime: OffsetDateTime,
 }
 
-#[async_trait::async_trait]
 impl<'a> Request for HyperRequest<'a> {
     type Response = http::Response<Incoming>;
     type HeaderMap = http::header::HeaderMap;
