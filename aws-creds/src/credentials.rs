@@ -188,6 +188,7 @@ fn http_get(url: &str) -> attohttpc::Result<attohttpc::Response> {
 }
 
 impl Credentials {
+    #[cfg(feature = "http-credentials")]
     pub fn refresh(&mut self) -> Result<(), CredentialsError> {
         if let Some(expiration) = self.expiration {
             if expiration.0 <= OffsetDateTime::now_utc() {
@@ -297,11 +298,7 @@ impl Credentials {
             .or_else(|_| Credentials::from_env())
             .or_else(|_| Credentials::from_profile(profile))
             .or_else(|_| Credentials::from_instance_metadata())
-            .or_else(|_| {
-                panic!(
-                    "Could not get valid credentials from STS, ENV, Profile or Instance metadata"
-                )
-            })
+            .map_err(|_| CredentialsError::NoCredentials)
     }
 
     pub fn from_env_specific(
@@ -368,7 +365,7 @@ impl Credentials {
     }
 
     pub fn from_profile(section: Option<&str>) -> Result<Credentials, CredentialsError> {
-        let home_dir = dirs::home_dir().ok_or(CredentialsError::HomeDir)?;
+        let home_dir = home::home_dir().ok_or(CredentialsError::HomeDir)?;
         let profile = format!("{}/.aws/credentials", home_dir.display());
         let conf = Ini::load_from_file(profile)?;
         let section = section.unwrap_or("default");

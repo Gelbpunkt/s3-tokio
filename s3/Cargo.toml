@@ -32,10 +32,10 @@ path = "../examples/gcs-tokio.rs"
 
 
 [dependencies]
-aws-creds = { version = "0.36", default-features = false, features = ["rustls-tls"]}
-# aws-creds = { path = "../aws-creds", default-features = false }
-aws-region = "0.25"
-# aws-region = {path = "../aws-region"}
+# aws-creds = { version = "0.36", default-features = false, features = ["rustls-tls"]}
+aws-creds = { path = "../aws-creds", default-features = false, features = ["rustls-tls"] }
+# aws-region = "0.25"
+aws-region = {path = "../aws-region"}
 base64 = "0.21"
 cfg-if = "1"
 time = { version = "0.3", features = ["formatting", "macros"] }
