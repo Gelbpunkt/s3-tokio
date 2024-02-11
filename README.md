@@ -1,8 +1,8 @@
-[![](https://camo.githubusercontent.com/2fee3780a8605b6fc92a43dab8c7b759a274a6cf/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f72757374632d737461626c652d627269676874677265656e2e737667)](https://www.rust-lang.org/tools/install)
-[![build](https://github.com/durch/rust-s3/workflows/build/badge.svg)](https://github.com/durch/rust-s3/actions)
+[![Rust Community](https://img.shields.io/badge/Rust_Community%20-Join_us-brightgreen?style=plastic&logo=rust)](https://www.rust-lang.org/community)
+[![build](https://github.com/FemLolStudio/s3-tokio/workflows/build/badge.svg)](https://github.com/FemLolStudio/s3-tokio/actions)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/FemLolStudio/s3-tokio/blob/master/LICENSE.md)
 <!--[![](https://img.shields.io/crates/v/rust-s3.svg)](https://crates.io/crates/rust-s3)
 ![](https://img.shields.io/crates/d/rust-s3.svg) -->
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/durch/rust-s3/blob/master/LICENSE.md)
 <!-- [![Join the chat at https://gitter.im/durch/rust-s3](https://badges.gitter.im/durch/rust-s3.svg)](https://gitter.im/durch/rust-s3?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) -->
 # s3-tokio [docs](https://docs.rs/rust-s3-async/latest/s3/)
 
