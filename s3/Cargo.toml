@@ -1,13 +1,13 @@
 [package]
-name = "rust-s3-async"
-version = "0.35.0"
-authors = ["Drazen Urch", "Aalekh Patel <aalekh.gwpeck.7998@icloud.com>"]
+name = "s3-tokio"
+version = "0.36.0"
+authors = ["FémLol Stúdió <femlol1femlol@gmail.com>", "Aalekh Patel <aalekh.gwpeck.7998@icloud.com>", "Drazen Urch"]
 description = "Rust library for working with AWS S3 and compatible object storage APIs"
-repository = "https://github.com/aalekhpatel07/rust-s3-async"
+repository = "https://github.com/FemLolStudio/s3-tokio"
 readme = "README.md"
 keywords = ["S3", "Wasabi", "Minio", "GCP", "R2"]
 license = "MIT"
-documentation = "https://docs.rs/aws-creds/latest/awscreds/"
+# documentation = ""
 edition = "2021"
 
 [lib]
