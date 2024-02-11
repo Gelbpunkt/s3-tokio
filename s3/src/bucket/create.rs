@@ -10,6 +10,7 @@ use http::HeaderMap;
 use std::{collections::HashMap, sync::Arc};
 use tokio::sync::RwLock;
 
+use super::client;
 use super::DEFAULT_REQUEST_TIMEOUT;
 
 #[allow(dead_code)]
@@ -130,6 +131,7 @@ impl Bucket {
             request_timeout: DEFAULT_REQUEST_TIMEOUT,
             path_style: false,
             listobjects_v2: true,
+            http_client: Arc::new(client::create_client(DEFAULT_REQUEST_TIMEOUT)?),
         })
     }
 
@@ -154,6 +156,7 @@ impl Bucket {
             request_timeout: DEFAULT_REQUEST_TIMEOUT,
             path_style: false,
             listobjects_v2: true,
+            http_client: Arc::new(client::create_client(DEFAULT_REQUEST_TIMEOUT)?),
         })
     }
 }

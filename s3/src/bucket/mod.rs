@@ -2,7 +2,13 @@ mod presign;
 use crate::error::S3Error;
 use awscreds::Credentials;
 use awsregion::Region;
+use bytes::Bytes;
 use http::HeaderMap;
+use http_body_util::Full;
+use hyper_rustls::HttpsConnector;
+use hyper_timeout::TimeoutConnector;
+use hyper_util::client::legacy::connect::HttpConnector;
+use hyper_util::client::legacy::Client;
 use std::collections::HashMap;
 use std::sync::Arc;
 use std::time::Duration;
@@ -32,6 +38,8 @@ mod put;
 mod head;
 
 mod utils;
+
+mod client;
 
 pub type Query = HashMap<String, String>;
 
@@ -70,6 +78,7 @@ pub struct Bucket {
     pub request_timeout: Option<Duration>,
     path_style: bool,
     listobjects_v2: bool,
+    http_client: Arc<Client<TimeoutConnector<HttpsConnector<HttpConnector>>, Full<Bytes>>>,
 }
 
 const DEFAULT_REQUEST_TIMEOUT: Option<Duration> = Some(Duration::from_secs(60));
@@ -92,6 +101,7 @@ impl Bucket {
             request_timeout: self.request_timeout,
             path_style: true,
             listobjects_v2: self.listobjects_v2,
+            http_client: self.http_client.clone(),
         }
     }
 
@@ -105,6 +115,7 @@ impl Bucket {
             request_timeout: self.request_timeout,
             path_style: self.path_style,
             listobjects_v2: self.listobjects_v2,
+            http_client: self.http_client.clone(),
         }
     }
 
@@ -118,11 +129,14 @@ impl Bucket {
             request_timeout: self.request_timeout,
             path_style: self.path_style,
             listobjects_v2: self.listobjects_v2,
+            http_client: self.http_client.clone(),
         }
     }
 
-    pub fn with_request_timeout(&self, request_timeout: Duration) -> Self {
-        Self {
+    pub fn with_request_timeout(&self, request_timeout: Duration) -> Result<Self, S3Error> {
+        let http_client = Arc::new(client::create_client(Some(request_timeout))?);
+
+        Ok(Self {
             name: self.name.clone(),
             region: self.region.clone(),
             credentials: self.credentials.clone(),
@@ -131,7 +145,8 @@ impl Bucket {
             request_timeout: Some(request_timeout),
             path_style: self.path_style,
             listobjects_v2: self.listobjects_v2,
-        }
+            http_client,
+        })
     }
 
     pub fn with_listobjects_v1(&self) -> Self {
@@ -144,6 +159,7 @@ impl Bucket {
             request_timeout: self.request_timeout,
             path_style: self.path_style,
             listobjects_v2: false,
+            http_client: self.http_client.clone(),
         }
     }
 

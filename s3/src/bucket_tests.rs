@@ -545,7 +545,8 @@ mod test {
             test_aws_credentials(),
         )
         .unwrap()
-        .with_request_timeout(Duration::from_secs(10));
+        .with_request_timeout(Duration::from_secs(10))
+        .unwrap();
 
         assert_eq!(bucket.request_timeout(), Some(Duration::from_secs(10)));
     }

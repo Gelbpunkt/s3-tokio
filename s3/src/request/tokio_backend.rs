@@ -7,9 +7,6 @@ use http_body_util::BodyExt;
 use http_body_util::BodyStream;
 use http_body_util::Full;
 use hyper::body::Incoming;
-use hyper_rustls::HttpsConnectorBuilder;
-use hyper_util::client::legacy::Client;
-use hyper_util::rt::TokioExecutor;
 use std::collections::HashMap;
 use time::OffsetDateTime;
 use tokio::io;
@@ -46,12 +43,7 @@ impl<'a> Request for HyperRequest<'a> {
             Ok(headers) => headers,
             Err(e) => return Err(e),
         };
-        let https_connector = HttpsConnectorBuilder::new()
-            .with_webpki_roots()
-            .https_or_http()
-            .enable_http1()
-            .build();
-        let client = Client::builder(TokioExecutor::new()).build::<_, Full<Bytes>>(https_connector);
+        let client = self.bucket.http_client();
 
         let method = match self.command.http_verb() {
             HttpMethod::Delete => http::Method::DELETE,

@@ -1,6 +1,6 @@
 [package]
 name = "s3-tokio"
-version = "0.37.2"
+version = "0.38.0"
 authors = ["FémLol Stúdió <femlol1femlol@gmail.com>", "Aalekh Patel <aalekh.gwpeck.7998@icloud.com>", "Drazen Urch"]
 description = "Rust library for working with AWS S3 and compatible object storage APIs"
 repository = "https://github.com/FemLolStudio/s3-tokio"
@@ -59,8 +59,9 @@ hyper-util = { version = "0.1", default-features = false, features = [
     #"stream",
 ] }
 hyper-rustls = { version = "0.26", default-features = false, features = ["ring", "webpki-roots", "http1", "http2"] }
+hyper-timeout = "0.5"
 # hyper-tls = { version = "0.6", default-features = false }
-# rustls = "0.22"
+rustls = { version = "0.22", default-features = false }
 # hyper-native-tls = { version = "0.3", default-features = false }
 tracing = { version="0.1", default-features = false }
 md5 = "0.7"
