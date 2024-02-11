@@ -1,6 +1,6 @@
 [package]
 name = "femlol-aws-creds"
-version = "0.37.2"
+version = "0.37.3"
 authors = ["FémLol Stúdió <femlol1femlol@gmail.com>", "Drazen Urch"]
 description = "Tiny Rust library for working with Amazon IAM credential,s, supports `s3` crate"
 repository = "https://github.com/FemLolStudio/s3-tokio"
@@ -25,7 +25,7 @@ url = "2"
 quick-xml = { version = "0.31", features = ["serialize"] }
 serde = { version = "1", features = ["derive"] }
 time = { version = "0.3", features = ["serde", "serde-well-known"] }
-log = "0.4"
+log = { version = "0.4", default-features = false }
 
 [features]
 default = ["native-tls"]
