@@ -1,4 +1,4 @@
-# Contributing to `rust-s3`
+# Contributing to `s3-tokio`
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
 - Reporting a bug
@@ -22,8 +22,8 @@ Pull requests are the best way to propose changes to the codebase (we use [GitHu
 ## Any Contributions You Make Will Be Under the MIT Software License
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License](https://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
 
-## Report Bugs Using GitHub's [Issues](https://github.com/durch/rust-s3/issues)
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/durch/rust-s3/issues/new); it's that easy!
+## Report Bugs Using GitHub's [Issues](https://github.com/FemLolStudio/s3-tokio/issues)
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/FemLolStudio/s3-tokio/issues/new/choose); it's that easy!
 
 ## Write Bug Reports With Detail, Background, and Sample Code
 
