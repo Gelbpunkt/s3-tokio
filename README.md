@@ -128,6 +128,6 @@ Each `GET` method has a `PUT` companion, and `tokio` methods are generic over `t
 
 ```toml
 [dependencies]
-s3-tokio = "0.37"
+s3-tokio = "0.38"
 ```
 
