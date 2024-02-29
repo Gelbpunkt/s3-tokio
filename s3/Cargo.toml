@@ -61,7 +61,7 @@ hyper-util = { version = "0.1", default-features = false, features = [
 hyper-rustls = { version = "0.26", default-features = false, features = ["ring", "webpki-roots", "http1", "http2"] }
 hyper-timeout = "0.5"
 # hyper-tls = { version = "0.6", default-features = false }
-rustls = { version = "0.22", default-features = false }
+rustls = { version = "0.23", default-features = false }
 # hyper-native-tls = { version = "0.3", default-features = false }
 tracing = { version="0.1", default-features = false }
 md5 = "0.7"
