@@ -17,7 +17,7 @@ path = "src/lib.rs"
 [dependencies]
 thiserror = "1"
 home = "0.5"
-rust-ini = "0.20"
+rust-ini = "0.21"
 attohttpc = { version = "0.27", default-features = false, features = [
     "json",
 ], optional = true }
