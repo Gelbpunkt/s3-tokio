@@ -1,6 +1,6 @@
 [package]
 name = "s3-tokio"
-version = "0.38.0"
+version = "0.39.0"
 authors = ["FémLol Stúdió <femlol1femlol@gmail.com>", "Aalekh Patel <aalekh.gwpeck.7998@icloud.com>", "Drazen Urch"]
 description = "Rust library for working with AWS S3 and compatible object storage APIs"
 repository = "https://github.com/FemLolStudio/s3-tokio"
