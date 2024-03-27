@@ -21,7 +21,7 @@ pub fn create_client(
     let https_connector = HttpsConnectorBuilder::new();
 
     let https_connector = if cfg!(feature = "no-verify-ssl") {
-        https_connector.with_tls_config(get_rustls_config_dangerous()?) // 'hyper-rustls' need to update for the new rustls version
+        https_connector.with_tls_config(get_rustls_config_dangerous()?)
     } else {
         https_connector.with_webpki_roots()
     };
