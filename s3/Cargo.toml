@@ -1,6 +1,6 @@
 [package]
 name = "s3-tokio"
-version = "0.39.2"
+version = "0.39.3"
 authors = ["FémLol Stúdió <femlol1femlol@gmail.com>", "Aalekh Patel <aalekh.gwpeck.7998@icloud.com>", "Drazen Urch"]
 description = "Rust library for working with AWS S3 and compatible object storage APIs"
 repository = "https://github.com/FemLolStudio/s3-tokio"
@@ -42,9 +42,9 @@ time = { version = "0.3", default-features = false, features = ["macros"] }
 futures = { version = "0.3", default-features = false }
 hex = "0.4"
 hmac = "0.12"
-http = "1.0"
+http = "1"
 http-body-util = "0.1"
-hyper = { version = "1.1", default-features = false, features = [
+hyper = { version = "1", default-features = false, features = [
     "client",
     "http1",
     "http2",
