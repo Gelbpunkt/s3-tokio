@@ -131,7 +131,7 @@ impl Bucket {
             request_timeout: DEFAULT_REQUEST_TIMEOUT,
             path_style: false,
             listobjects_v2: true,
-            http_client: Arc::new(client::create_client(DEFAULT_REQUEST_TIMEOUT)?),
+            http_client: client::create_client(DEFAULT_REQUEST_TIMEOUT)?,
         })
     }
 
@@ -156,7 +156,7 @@ impl Bucket {
             request_timeout: DEFAULT_REQUEST_TIMEOUT,
             path_style: false,
             listobjects_v2: true,
-            http_client: Arc::new(client::create_client(DEFAULT_REQUEST_TIMEOUT)?),
+            http_client: client::create_client(DEFAULT_REQUEST_TIMEOUT)?,
         })
     }
 }

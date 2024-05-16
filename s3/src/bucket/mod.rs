@@ -78,7 +78,7 @@ pub struct Bucket {
     pub request_timeout: Option<Duration>,
     path_style: bool,
     listobjects_v2: bool,
-    http_client: Arc<Client<TimeoutConnector<HttpsConnector<HttpConnector>>, Full<Bytes>>>,
+    http_client: Client<TimeoutConnector<HttpsConnector<HttpConnector>>, Full<Bytes>>,
 }
 
 const DEFAULT_REQUEST_TIMEOUT: Option<Duration> = Some(Duration::from_secs(60));
@@ -134,7 +134,7 @@ impl Bucket {
     }
 
     pub fn with_request_timeout(&self, request_timeout: Duration) -> Result<Self, S3Error> {
-        let http_client = Arc::new(client::create_client(Some(request_timeout))?);
+        let http_client = client::create_client(Some(request_timeout))?;
 
         Ok(Self {
             name: self.name.clone(),
@@ -145,7 +145,7 @@ impl Bucket {
             request_timeout: Some(request_timeout),
             path_style: self.path_style,
             listobjects_v2: self.listobjects_v2,
-            http_client,
+            http_client: http_client.clone(),
         })
     }
 

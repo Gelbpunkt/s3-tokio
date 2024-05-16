@@ -104,7 +104,7 @@ impl ServerCertVerifier for NoCertificateVerification {
 impl Bucket {
     pub fn http_client(
         &self,
-    ) -> Arc<Client<TimeoutConnector<HttpsConnector<HttpConnector>>, Full<Bytes>>> {
-        Arc::clone(&self.http_client)
+    ) -> Client<TimeoutConnector<HttpsConnector<HttpConnector>>, Full<Bytes>> {
+        self.http_client.clone()
     }
 }

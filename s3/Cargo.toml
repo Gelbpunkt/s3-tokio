@@ -37,7 +37,7 @@ femlol-aws-creds = {version = "0.39", default-features = false, features = ["rus
 aws-region = "0.25"
 # aws-region = { path = "../aws-region", version = "0.25.4" }
 base64 = "0.22"
-cfg-if = "1"
+# cfg-if = "1"
 time = { version = "0.3", default-features = false, features = ["macros"] }
 futures = { version = "0.3", default-features = false }
 hex = "0.4"
@@ -46,19 +46,19 @@ http = "1"
 http-body-util = "0.1"
 hyper = { version = "1", default-features = false, features = [
     "client",
-    "http1",
+    #"http1",
     "http2",
     #"stream",
 ] }
 hyper-util = { version = "0.1", default-features = false, features = [
     "client",
-    "http1",
+    #"http1",
     "http2",
     "client-legacy",
     "tokio",
     #"stream",
 ] }
-hyper-rustls = { version = "0.27", default-features = false, features = ["ring", "webpki-roots", "http1", "http2"] }
+hyper-rustls = { version = "0.27", default-features = false, features = ["ring", "webpki-tokio", "http2", "tls12"] }
 hyper-timeout = "0.5"
 # hyper-tls = { version = "0.6", default-features = false }
 rustls = { version = "0.23", default-features = false, features = ["std"] }
@@ -66,7 +66,7 @@ rustls = { version = "0.23", default-features = false, features = ["std"] }
 tracing = { version="0.1", default-features = false, optional = true }
 md5 = "0.7"
 percent-encoding = "2"
-serde = { version = "1", features = ["derive"]}
+serde = { version = "1", default-features = false, features = ["derive"]}
 quick-xml = { version = "0.31", features = ["serialize"] }
 sha2 = "0.10"
 thiserror = "1"
@@ -83,7 +83,7 @@ bytes = { version = "1" }
 strum_macros = "0.26"
 
 [features]
-default = ["fail-on-err", "tracing"]
+default = ["fail-on-err"]
 no-verify-ssl = []
 fail-on-err = []
 tracing = ["dep:tracing"]
@@ -93,4 +93,4 @@ tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros", "fs"] }
 # async-std = { version = "1", features = ["attributes"] }
 uuid = { version = "1", features = ["v4"] }
 env_logger = "0.11"
-anyhow = "1"
+# anyhow = "1"

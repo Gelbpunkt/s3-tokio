@@ -3,6 +3,7 @@ extern crate md5;
 
 use bytes::Bytes;
 use futures::TryStreamExt;
+use http::Version;
 use http_body_util::BodyExt;
 use http_body_util::BodyStream;
 use http_body_util::Full;
@@ -56,6 +57,7 @@ impl<'a> Request for HyperRequest<'a> {
 
         let request: http::Request<Full<Bytes>> = {
             let mut request = http::Request::builder()
+                .version(Version::HTTP_2)
                 .method(method)
                 .uri(self.url()?.as_str());
 
