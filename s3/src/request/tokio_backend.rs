@@ -21,6 +21,7 @@ pub use crate::request::tokio_backend::HyperRequest as RequestImpl;
 pub use tokio::io::AsyncWriteExt;
 pub use tokio_stream::Stream;
 
+#[cfg(feature = "tracing")]
 use tracing::{event, span, Level};
 
 use crate::request::request_trait::ResponseDataStream;
@@ -63,6 +64,7 @@ impl<'a> Request for HyperRequest<'a> {
             }
             request.body(Full::from(Bytes::from(self.request_body())))?
         };
+        #[cfg(feature = "tracing")]
         let span = span!(
             Level::DEBUG,
             "rust-s3-async",
@@ -76,9 +78,11 @@ impl<'a> Request for HyperRequest<'a> {
             month = self.datetime.month() as u8,
             year = self.datetime.year()
         );
+        #[cfg(feature = "tracing")]
         let _enter = span.enter();
         let response = client.request(request).await?;
 
+        #[cfg(feature = "tracing")]
         event!(Level::DEBUG, status_code = response.status().as_u16(),);
 
         if cfg!(feature = "fail-on-err") && !response.status().is_success() {

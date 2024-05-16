@@ -63,7 +63,7 @@ hyper-timeout = "0.5"
 # hyper-tls = { version = "0.6", default-features = false }
 rustls = { version = "0.23", default-features = false, features = ["std"] }
 # hyper-native-tls = { version = "0.3", default-features = false }
-tracing = { version="0.1", default-features = false }
+tracing = { version="0.1", default-features = false, optional = true }
 md5 = "0.7"
 percent-encoding = "2"
 serde = { version = "1", features = ["derive"]}
@@ -83,9 +83,10 @@ bytes = { version = "1" }
 strum_macros = "0.26"
 
 [features]
-default = ["fail-on-err"]
+default = ["fail-on-err", "tracing"]
 no-verify-ssl = []
 fail-on-err = []
+tracing = ["dep:tracing"]
 
 [dev-dependencies]
 tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros", "fs"] }
