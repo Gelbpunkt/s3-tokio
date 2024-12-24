@@ -5,7 +5,6 @@ use awsregion::Region;
 use bytes::Bytes;
 use http::HeaderMap;
 use http_body_util::Full;
-use hyper_rustls::HttpsConnector;
 use hyper_timeout::TimeoutConnector;
 use hyper_util::client::legacy::connect::HttpConnector;
 use hyper_util::client::legacy::Client;
@@ -78,7 +77,7 @@ pub struct Bucket {
     pub request_timeout: Option<Duration>,
     path_style: bool,
     listobjects_v2: bool,
-    http_client: Client<TimeoutConnector<HttpsConnector<HttpConnector>>, Full<Bytes>>,
+    http_client: Client<TimeoutConnector<HttpConnector>, Full<Bytes>>,
 }
 
 const DEFAULT_REQUEST_TIMEOUT: Option<Duration> = Some(Duration::from_secs(60));
